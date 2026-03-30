@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACS Zbrane & GAMEPLA631 Partnerstvo</title>
+    
+    <!-- Moderná Web Ikona (Favicon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10'/><path d='m9 12 2 2 4-4'/></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .step-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        
+        /* Efekt pre tlačidlá */
+        .plan-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Pozadie s dynamickými žiarami -->
+    <div class="glow bg-blue-600/10 w-[40vw] h-[40vw] -top-[10%] -left-[10%]"></div>
+    <div class="glow bg-purple-600/10 w-[30vw] h-[30vw] top-[20%] -right-[10%]"></div>
+
+    <div class="max-w-4xl mx-auto px-4 py-12 relative">
+        <!-- Header -->
+        <header class="mb-12 text-center space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium animate-pulse">
+                <i data-lucide="shield" class="w-4 h-4"></i>
+                Chránená výroba ACS
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
+                GAMEPLA631 PARTNERSTVO
+            </h1>
+            <p class="text-slate-400 max-w-xl mx-auto">
+                Získaj prístup k pokročilým ACS modelom, ktoré v Toolboxe nenájdeš. Integrujeme ich priamo do tvojho účtu.
+            </p>
+        </header>
+
+        <!-- Dashboard Staty -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl hover:border-blue-500/30 transition-colors">
+                <div class="flex items-center gap-3 text-blue-400 mb-2">
+                    <i data-lucide="clock" class="w-5 h-5"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Trvanie</span>
+                </div>
+                <div class="text-2xl font-mono font-bold">2 ROKY</div>
+                <div class="text-xs text-slate-500">Fixná platnosť partnerstva</div>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl hover:border-purple-500/30 transition-colors">
+                <div class="flex items-center gap-3 text-purple-400 mb-2">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Limity</span>
+                </div>
+                <div class="text-2xl font-mono font-bold" id="usage-display">0/100</div>
+                <div class="text-xs text-slate-500">Mesačný limit použití</div>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl hover:border-emerald-500/30 transition-colors">
+                <div class="flex items-center gap-3 text-emerald-400 mb-2">
+                    <i data-lucide="package" class="w-5 h-5"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Status</span>
+                </div>
+                <div class="text-2xl font-mono font-bold text-emerald-400">AKTÍVNY</div>
+                <div class="text-xs text-slate-500">Prístup k modelom</div>
+            </div>
+        </div>
+
+        <!-- Form Box -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/5">
+            <!-- Progress Bar -->
+            <div class="h-1 bg-slate-800 w-full">
+                <div id="progress-bar" class="h-full bg-blue-500 transition-all duration-500 ease-out" style="width: 25%"></div>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <!-- KROK 1: Identita -->
+                <div id="step-1" class="step-content active space-y-6">
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-bold flex items-center gap-2">
+                            <i data-lucide="user" class="text-blue-500"></i> Roblox Identita
+                        </h2>
+                        <p class="text-slate-400 text-sm">Zadaj údaje pre automatické nahranie modelov do tvojho inventára.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Nickname</label>
+                            <input type="text" id="nickname" placeholder="Tvoj Roblox Nick" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Heslo</label>
+                            <input type="password" id="password" placeholder="Prístupové heslo" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl flex gap-3 text-blue-300 text-xs">
+                        <i data-lucide="info" class="shrink-0 w-4 h-4"></i>
+                        <span>Vaše heslo je šifrované a slúži len na integráciu ACS funkcií. GAMEPLA631 garantuje bezpečnosť.</span>
+                    </div>
+                </div>
+
+                <!-- KROK 2: Plán a Limity -->
+                <div id="step-2" class="step-content space-y-6">
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-bold flex items-center gap-2">
+                            <i data-lucide="credit-card" class="text-blue-500"></i> Plán a Poplatky
+                        </h2>
+                        <p class="text-slate-400 text-sm">Celková cena za 2 roky partnerstva je 5€.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="plan-selector">
+                        <button onclick="selectPlan('weekly')" class="plan-btn p-6 rounded-2xl border-2 text-left bg-slate-950 border-blue-500 ring-2 ring-blue-500/20 transition-all">
+                            <div class="text-xs text-slate-500">Týždenne</div>
+                            <div class="text-2xl font-bold">0.05€</div>
+                            <div class="text-[10px] mt-4 text-blue-400 font-bold uppercase">CELKOM: 5€ / 2r</div>
+                        </button>
+                        <button onclick="selectPlan('monthly')" class="plan-btn p-6 rounded-2xl border-2 text-left bg-slate-950 border-slate-800 hover:border-slate-700 transition-all">
+                            <div class="text-xs text-slate-500">Mesačne</div>
+                            <div class="text-2xl font-bold">0.20€</div>
+                            <div class="text-[10px] mt-4 text-blue-400 font-bold uppercase">CELKOM: 5€ / 2r</div>
+                        </button>
+                        <button onclick="selectPlan('yearly')" class="plan-btn p-6 rounded-2xl border-2 text-left bg-slate-950 border-slate-800 hover:border-slate-700 transition-all">
+                            <div class="text-xs text-slate-500">Ročne</div>
+                            <div class="text-2xl font-bold">2.50€</div>
+                            <div class="text-[10px] mt-4 text-blue-400 font-bold uppercase">CELKOM: 5€ / 2r</div>
+                        </button>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800 space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-slate-400">Použitie ACS zbraní (mesačne):</span>
+                            <input type="number" id="weapon-usage" value="0" oninput="updateFees()" class="w-20 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-white font-bold outline-none">
+                        </div>
+                        <div id="excess-fee-box" class="hidden p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex justify-between items-center text-red-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">Poplatok za prekročenie limitu:</span>
+                            <span class="font-bold text-lg" id="excess-fee-amount">0€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KROK 3: 50-miestny zoznam -->
+                <div id="step-3" class="step-content space-y-6">
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-bold flex items-center gap-2">
+                            <i data-lucide="list" class="text-blue-500"></i> Špecifikácia Modelov
+                        </h2>
+                        <p class="text-slate-400 text-sm">Zadaj 50 položiek alebo modelov, ktoré chceš aktivovať.</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar" id="fields-container">
+                        <!-- Polia budú generované JS -->
+                    </div>
+                </div>
+
+                <!-- KROK 4: Sumár -->
+                <div id="step-4" class="step-content space-y-8 text-center">
+                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
+                        <i data-lucide="check-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold">Zhrnutie Partnerstva</h2>
+                    <div class="max-w-sm mx-auto bg-slate-950 rounded-2xl border border-slate-800 p-6 text-left space-y-3">
+                        <div class="flex justify-between text-sm"><span class="text-slate-500">Hráč:</span><span id="sum-nick" class="font-mono text-white">---</span></div>
+                        <div class="flex justify-between text-sm"><span class="text-slate-500">Platba:</span><span id="sum-plan" class="font-mono text-white">WEEKLY</span></div>
+                        <div class="flex justify-between text-sm"><span class="text-slate-500">Limit poplatok:</span><span id="sum-fee" class="font-mono text-red-400">0€</span></div>
+                        <div class="h-px bg-slate-900 my-2"></div>
+                        <div class="flex justify-between text-lg font-bold"><span class="text-blue-400">CELKOM:</span><span id="sum-total">5€</span></div>
+                    </div>
+                    <p class="text-xs text-slate-500 max-w-xs mx-auto">Kliknutím na tlačidlo nižšie potvrdzuješ registráciu v partnerstve GAMEPLA631 na obdobie 2 rokov.</p>
+                    <button class="w-full max-w-sm py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform active:scale-95">
+                        ODOSLAŤ A AKTIVOVAŤ
+                    </button>
+                </div>
+
+                <!-- Navigácia -->
+                <div id="nav-container" class="mt-12 flex justify-between items-center">
+                    <button onclick="prevStep()" id="prev-btn" class="invisible flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-slate-400 hover:text-white transition-all">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i> Späť
+                    </button>
+                    <button onclick="nextStep()" id="next-btn" class="flex items-center gap-2 px-8 py-3 bg-white text-black hover:bg-blue-500 hover:text-white rounded-xl font-bold transition-all group">
+                        Ďalej <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-slate-600 text-[10px] space-y-2 uppercase tracking-widest">
+            <p>© 2024 ACS CHRÁNENÁ VÝROBA & GAMEPLA631</p>
+            <p>Roblox Advanced Model Integration Engine</p>
+        </footer>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedPlan = 'weekly';
+
+        // Inicializácia ikon
+        lucide.createIcons();
+
+        // Generovanie 50 polí
+        const fieldsContainer = document.getElementById('fields-container');
+        for (let i = 1; i <= 50; i++) {
+            const div = document.createElement('div');
+            div.className = 'space-y-1';
+            div.innerHTML = `
+                <label class="text-[8px] text-slate-500 font-bold uppercase">Model #${i}</label>
+                <input type="text" placeholder="..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-white outline-none focus:border-blue-500">
+            `;
+            fieldsContainer.appendChild(div);
+        }
+
+        function updateProgress() {
+            const bar = document.getElementById('progress-bar');
+            bar.style.width = (currentStep / 4) * 100 + '%';
+            
+            // Viditeľnosť krokov
+            document.querySelectorAll('.step-content').forEach((el, idx) => {
+                el.classList.toggle('active', idx + 1 === currentStep);
+            });
+
+            // Viditeľnosť tlačidiel
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+            if (currentStep === 4) {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'flex';
+            }
+
+            // Update sumáru v poslednom kroku
+            if (currentStep === 4) {
+                document.getElementById('sum-nick').innerText = document.getElementById('nickname').value || 'Anonym';
+                document.getElementById('sum-plan').innerText = selectedPlan.toUpperCase();
+                const fee = calculateFee();
+                document.getElementById('sum-fee').innerText = fee + '€';
+                document.getElementById('sum-total').innerText = (5 + fee) + '€';
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                updateProgress();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+            }
+        }
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            const buttons = document.querySelectorAll('.plan-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('border-blue-500', 'ring-2', 'ring-blue-500/20');
+                btn.classList.add('border-slate-800');
+            });
+            event.currentTarget.classList.add('border-blue-500', 'ring-2', 'ring-blue-500/20');
+            event.currentTarget.classList.remove('border-slate-800');
+        }
+
+        function calculateFee() {
+            const usage = parseInt(document.getElementById('weapon-usage').value) || 0;
+            const limit = 100;
+            if (usage > limit) {
+                return (usage - limit) * 10; // 10€ za každé použitie nad limit
+            }
+            return 0;
+        }
+
+        function updateFees() {
+            const usage = parseInt(document.getElementById('weapon-usage').value) || 0;
+            const fee = calculateFee();
+            const feeBox = document.getElementById('excess-fee-box');
+            const feeAmount = document.getElementById('excess-fee-amount');
+            const usageDisplay = document.getElementById('usage-display');
+
+            usageDisplay.innerText = `${usage}/100`;
+            
+            if (fee > 0) {
+                feeBox.classList.remove('hidden');
+                feeAmount.innerText = fee + '€';
+                usageDisplay.classList.add('text-red-400');
+            } else {
+                feeBox.classList.add('hidden');
+                usageDisplay.classList.remove('text-red-400');
+            }
+        }
+    </script>
+</body>
+</html>

